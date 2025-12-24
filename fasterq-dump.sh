@@ -1,0 +1,1 @@
+fasterq-dump SRR3734796 -O SRR3734796/
