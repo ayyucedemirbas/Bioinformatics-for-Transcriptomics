@@ -1,0 +1,8 @@
+	STAR --limitBAMsortRAM 500000000 --runThreadN 4 --genomeDir .//YeastIndex/ --readFilesIn .//SRR390729_1.fastq.gz .//SRR390729_2.fastq.gz --readFilesCommand gunzip -c --outSAMtype BAM SortedByCoordinate --outSAMstrandField intronMotif --outFileNamePrefix .//Star/SRR390729_
+	STAR version: 2.7.11b   compiled:  :/Users/ayyucedemirbas/Downloads/Bioinformatics Methods for Transcriptomics/STAR/source
+Dec 25 15:40:19 ..... started STAR run
+Dec 25 15:40:19 ..... loading genome
+Dec 25 15:40:19 ..... started mapping
+Dec 25 15:48:47 ..... finished mapping
+Dec 25 15:48:47 ..... started sorting BAM
+Dec 25 15:48:47 ..... finished successfully

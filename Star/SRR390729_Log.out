@@ -1,0 +1,189 @@
+STAR version=2.7.11b
+STAR compilation time,server,dir= :/Users/ayyucedemirbas/Downloads/Bioinformatics Methods for Transcriptomics/STAR/source
+STAR git: On branch master ; commit b1edc1208d91a53bf40ebae8669f71d50b994851 ; diff files: source/Makefile 
+##### Command Line:
+STAR --limitBAMsortRAM 500000000 --runThreadN 4 --genomeDir .//YeastIndex/ --readFilesIn .//SRR390729_1.fastq.gz .//SRR390729_2.fastq.gz --readFilesCommand gunzip -c --outSAMtype BAM SortedByCoordinate --outSAMstrandField intronMotif --outFileNamePrefix .//Star/SRR390729_
+##### Initial USER parameters from Command Line:
+outFileNamePrefix                 .//Star/SRR390729_
+###### All USER parameters from Command Line:
+limitBAMsortRAM               500000000     ~RE-DEFINED
+runThreadN                    4     ~RE-DEFINED
+genomeDir                     .//YeastIndex/     ~RE-DEFINED
+readFilesIn                   .//SRR390729_1.fastq.gz   .//SRR390729_2.fastq.gz        ~RE-DEFINED
+readFilesCommand              gunzip   -c        ~RE-DEFINED
+outSAMtype                    BAM   SortedByCoordinate        ~RE-DEFINED
+outSAMstrandField             intronMotif     ~RE-DEFINED
+outFileNamePrefix             .//Star/SRR390729_     ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runThreadN                        4
+genomeDir                         .//YeastIndex/
+readFilesIn                       .//SRR390729_1.fastq.gz   .//SRR390729_2.fastq.gz   
+readFilesCommand                  gunzip   -c   
+limitBAMsortRAM                   500000000
+outFileNamePrefix                 .//Star/SRR390729_
+outSAMtype                        BAM   SortedByCoordinate   
+outSAMstrandField                 intronMotif
+
+-------------------------------
+##### Final effective command line:
+STAR   --runThreadN 4   --genomeDir .//YeastIndex/   --readFilesIn .//SRR390729_1.fastq.gz   .//SRR390729_2.fastq.gz      --readFilesCommand gunzip   -c      --limitBAMsortRAM 500000000   --outFileNamePrefix .//Star/SRR390729_   --outSAMtype BAM   SortedByCoordinate      --outSAMstrandField intronMotif
+----------------------------------------
+
+Number of fastq files for each mate = 1
+
+   Input read files for mate 1 :
+-rw-r--r--  1 ayyucedemirbas  staff  155716368 Dec 25 15:11 .//SRR390729_1.fastq.gz
+
+   readsCommandsFile:
+exec > ".//Star/SRR390729__STARtmp/tmp.fifo.read1"
+echo FILE 0
+gunzip   -c      ".//SRR390729_1.fastq.gz"
+
+
+   Input read files for mate 2 :
+-rw-r--r--  1 ayyucedemirbas  staff  164995456 Dec 25 15:11 .//SRR390729_2.fastq.gz
+
+   readsCommandsFile:
+exec > ".//Star/SRR390729__STARtmp/tmp.fifo.read2"
+echo FILE 0
+gunzip   -c      ".//SRR390729_2.fastq.gz"
+
+WARNING --outSAMstrandField=intronMotif, therefore STAR will output XS attribute
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+Reading genome generation parameters:
+### STAR   --runMode genomeGenerate      --runThreadN 4   --genomeDir ./YeastIndex   --genomeFastaFiles ./Genome_Ref/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa      --genomeSAindexNbases 10   --sjdbGTFfile ./Genome_Ref/Saccharomyces_cerevisiae.R64-1-1.110.gtf   --sjdbOverhang 100
+### GstrandBit=32
+versionGenome                 2.7.4a     ~RE-DEFINED
+genomeType                    Full     ~RE-DEFINED
+genomeFastaFiles              ./Genome_Ref/Saccharomyces_cerevisiae.R64-1-1.dna.toplevel.fa        ~RE-DEFINED
+genomeSAindexNbases           10     ~RE-DEFINED
+genomeChrBinNbits             18     ~RE-DEFINED
+genomeSAsparseD               1     ~RE-DEFINED
+genomeTransformType           None     ~RE-DEFINED
+genomeTransformVCF            -     ~RE-DEFINED
+sjdbOverhang                  100     ~RE-DEFINED
+sjdbFileChrStartEnd           -        ~RE-DEFINED
+sjdbGTFfile                   ./Genome_Ref/Saccharomyces_cerevisiae.R64-1-1.110.gtf     ~RE-DEFINED
+sjdbGTFchrPrefix              -     ~RE-DEFINED
+sjdbGTFfeatureExon            exon     ~RE-DEFINED
+sjdbGTFtagExonParentTranscripttranscript_id     ~RE-DEFINED
+sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
+sjdbInsertSave                Basic     ~RE-DEFINED
+genomeFileSizes               14753228   100896720        ~RE-DEFINED
+Genome version is compatible with current STAR
+Number of real (reference) chromosomes= 17
+1	I	230218	0
+2	II	813184	262144
+3	III	316620	1310720
+4	IV	1531933	1835008
+5	V	576874	3407872
+6	VI	270161	4194304
+7	VII	1090940	4718592
+8	VIII	562643	6029312
+9	IX	439888	6815744
+10	X	745751	7340032
+11	XI	666816	8126464
+12	XII	1078177	8912896
+13	XIII	924431	10223616
+14	XIV	784333	11272192
+15	XV	1091291	12058624
+16	XVI	948066	13369344
+17	Mito	85779	14417920
+--sjdbOverhang = 100 taken from the generated genome
+Started loading the genome: Thu Dec 25 15:40:19 2025
+
+Genome: size given as a parameter = 14753228
+SA: size given as a parameter = 100896720
+SAindex: size given as a parameter = 1
+Read from SAindex: pGe.gSAindexNbases=10  nSAi=1398100
+nGenome=14753228;  nSAbyte=100896720
+GstrandBit=32   SA number of indices=24459810
+Shared memory is not used for genomes. Allocated a private copy of the genome.
+Genome file size: 14753228 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 14753228 bytes
+SA file size: 100896720 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 100896720 bytes
+Loading SAindex ... done: 6116787 bytes
+Finished loading the genome: Thu Dec 25 15:40:19 2025
+
+Sum of all Genome bytes: 30940574
+Sum of all SA bytes: 9544359348
+Sum of all SAi bytes: 542788509
+Processing splice junctions database sjdbN=364,   pGe.sjdbOverhang=100 
+alignIntronMax=alignMatesGapMax=0, the max intron size will be approximately determined by (2^winBinNbits)*winAnchorDistNbins=589824
+Created thread # 1
+Created thread # 1
+Starting to map file # 0
+mate 1:   .//SRR390729_1.fastq.gz
+mate 2:   .//SRR390729_2.fastq.gz
+Created thread # 2
+Created thread # 3
+Thread #2 end of input stream, nextChar=-1
+BAM sorting: 7246 mapped reads
+BAM sorting bins genomic start loci:
+1	11	452810
+2	11	454040
+3	11	456088
+4	11	456091
+5	11	456092
+6	11	456093
+7	11	456093
+8	11	456095
+9	11	456096
+10	11	456100
+11	11	456102
+12	11	456109
+13	11	456110
+14	11	456256
+15	11	456387
+16	11	456387
+17	11	456400
+18	11	456400
+19	11	456405
+20	11	456436
+21	11	457098
+22	11	457135
+23	11	457308
+24	11	457407
+25	11	461872
+26	11	463143
+27	11	463425
+28	11	465228
+29	11	465230
+30	11	465232
+31	11	465237
+32	11	465245
+33	11	465380
+34	11	465519
+35	11	465524
+36	11	465524
+37	11	465537
+38	11	465537
+39	11	465537
+40	11	465537
+41	11	465537
+42	11	465540
+43	11	465543
+44	11	465554
+45	11	465832
+46	11	466272
+47	11	466521
+48	11	466544
+Completed: thread #1
+Completed: thread #2
+Completed: thread #3
+Completed: thread #0
+Joined thread # 1
+Joined thread # 2
+Joined thread # 3
+Dec 25 15:48:47 ..... finished mapping
+RAM after mapping:
+
+RAM after freeing genome index memory:
+
+Dec 25 15:48:47 ..... started sorting BAM
+Max memory needed for sorting = 1105082
+ALL DONE!
