@@ -1,0 +1,28 @@
+#!/bin/bash
+
+BASEDIR=.
+BAMDIR=../Star
+OUTDIR=../Psiclass
+CMDDIR=../commands
+GTF_REF=./gencode.vM30.region.gtf
+
+mkdir -p $OUTDIR
+mkdir -p $OUTDIR/WithGeneNames
+
+echo "1. Creating BAM list (bamlist.psiclass)..."
+ls -d $PWD/$BAMDIR/*_Aligned.sortedByCoord.out.bam > bamlist.psiclass
+
+echo "2. Psiclass..."
+psiclass --lb bamlist.psiclass -o $OUTDIR/psiclass -p 4 &> psiclass.log
+
+echo "3. GTF list..."
+ls -d $PWD/$OUTDIR/psiclass_vote.gtf > psiclass_gtf.list
+ls -d $PWD/$OUTDIR/psiclass_sample_*.gtf >> psiclass_gtf.list
+
+echo "4. Adding gene names (add_gn_name)..."
+$CMDDIR/add_gn_name $GTF_REF psiclass_gtf.list -o $OUTDIR/WithGeneNames
+
+echo "5. Strand info(add-strand)..."
+$CMDDIR/add-strand $GTF_REF -r < $OUTDIR/WithGeneNames/psiclass_vote.gtf > $OUTDIR/WithGeneNames/psiclass_vote.withStrand.gtf
+
+echo "Done."
