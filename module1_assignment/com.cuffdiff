@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BASEDIR=.
+BAMDIR=../Star
+GTF=../Psiclass/WithGeneNames/psiclass_vote.withStrand.gtf
+OUTDIR=../Cuffdiff
+
+mkdir -p $OUTDIR
+
+echo "Cuffdiff is starting (It may take 5-10 mins)..."
+
+CTRLBAMS=$BAMDIR/1mo_Rep1_Aligned.sortedByCoord.out.bam,$BAMDIR/1mo_Rep2_Aligned.sortedByCoord.out.bam,$BAMDIR/1mo_Rep3_Aligned.sortedByCoord.out.bam
+
+TESTBAMS=$BAMDIR/4mo_Rep1_Aligned.sortedByCoord.out.bam,$BAMDIR/4mo_Rep2_Aligned.sortedByCoord.out.bam,$BAMDIR/4mo_Rep3_Aligned.sortedByCoord.out.bam
+
+cuffdiff -o $OUTDIR -p 4 $GTF $CTRLBAMS $TESTBAMS &> cuffdiff.log
+
+echo "Done."
