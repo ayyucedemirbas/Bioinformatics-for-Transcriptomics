@@ -1,0 +1,89 @@
+#!/bin/bash
+
+BASEDIR=".."
+
+BAMDIR="$BASEDIR/Sorted"
+OUTDIR="$BASEDIR/DESeq2"
+GTF="$BASEDIR/Psiclass/WithGeneNames/psiclass_vote.withStrand.gtf"
+
+mkdir -p $OUTDIR
+mkdir -p $OUTDIR/WithGeneNames
+
+echo "..."
+
+for bam in $BAMDIR/*_Aligned.sortedByCoord.out.bam; do
+    filename=$(basename "$bam")
+    newname="${filename%%_Aligned*}.so.bam"
+    
+    echo "   Process: $filename -> $newname"
+    samtools sort -n -@ 4 "$bam" -o "$SORTDIR/$newname"
+done
+
+echo "2. Metadata CSV file..."
+cat <<EOF > $OUTDIR/pheno.csv
+sampleID,condition
+1mo_Rep1.so.bam,1mo
+1mo_Rep2.so.bam,1mo
+1mo_Rep3.so.bam,1mo
+4mo_Rep1.so.bam,4mo
+4mo_Rep2.so.bam,4mo
+4mo_Rep3.so.bam,4mo
+EOF
+
+echo "3.Creating the R script (run_deseq.R)..."
+
+cat <<EOF > $OUTDIR/run_deseq.R
+library(DESeq2)
+library(GenomicFeatures)
+library(GenomicAlignments)
+
+setwd("$PWD/..") 
+print(paste("Path:", getwd()))
+
+gtfFile <- "Psiclass/WithGeneNames/psiclass_vote.withStrand.gtf"
+phenoFile <- "DESeq2/pheno.csv"
+bamDir <- "Sorted"
+
+sampleInfo <- read.csv(phenoFile)
+filenames <- file.path(bamDir, sampleInfo\$sampleID)
+bamfiles <- BamFileList(filenames, yieldSize=2000000)
+
+print("Annotations...")
+txdb <- makeTxDbFromGFF(gtfFile, format="gtf")
+ebg <- exonsBy(txdb, by="gene")
+
+print("Counting (SummarizeOverlaps)...")
+se <- summarizeOverlaps(features=ebg, reads=bamfiles,
+                        mode="Union",
+                        singleEnd=TRUE,
+                        ignore.strand=TRUE,
+                        fragments=FALSE)
+
+print("DESeq2 analysis...")
+colData(se)\$condition <- factor(sampleInfo\$condition)
+colData(se)\$condition <- relevel(colData(se)\$condition, ref="1mo")
+
+dds <- DESeqDataSet(se, design = ~ condition)
+dds <- DESeq(dds)
+
+res <- results(dds)
+write.csv(as.data.frame(res), file="DESeq2/results_1mo_4mo.csv")
+print("Done.")
+EOF
+
+echo "4. Running the R script..."
+
+if ! command -v R &> /dev/null
+then
+    echo "ERROR: Can't find the 'R' command. Please be sure that Conda is activated."
+    echo "A list of conda envs:"
+    conda env list
+    exit 1
+fi
+
+R CMD BATCH $OUTDIR/run_deseq.R $OUTDIR/deseq.log
+
+echo "5. Adding gene names..."
+../commands/add_gn_name $GTF < $OUTDIR/results_1mo_4mo.csv > $OUTDIR/WithGeneNames/gn_results_1mo_4mo.csv
+
+echo "DONE."
